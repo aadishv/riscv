@@ -1,6 +1,0 @@
-elf := "target/riscv32emc-unknown-none-elf/release/flpr"
-
-# Build the FLPR firmware and turn it into a raw image for the app core to load at 0x20067C00.
-build:
-    cargo build --release
-    "$(rustc --print sysroot)/lib/rustlib/$(rustc -vV | sed -n 's/^host: //p')/bin/llvm-objcopy" -O binary {{ elf }} target/flpr.bin
