@@ -24,13 +24,35 @@ mod vevif {
     }
 }
 
+mod ctrl {
+    use riscv::{read_write_csr, read_write_csr_field};
+
+    read_write_csr! {
+        /// Nordic Control Register
+        NordicCtrl: 0x7C0,
+        mask: usize::MAX,
+    }
+
+    read_write_csr_field! {
+        NordicCtrl,
+        /// Control bit to enable Real-Time Peripherals
+        enable_rt_periph: 0,
+    }
+
+    read_write_csr_field! {
+        NordicCtrl,
+        /// Arbitration priority on bus
+        nordic_key: [16:31],
+    }
+}
+
 #[entry]
 fn main() -> ! {
     // enable vevif
-    let mut ctrl = flpr2::csr::ctrl::read();
+    let mut ctrl = ctrl::read();
     ctrl.set_enable_rt_periph(true);
     ctrl.set_nordic_key(0x507D);
-    unsafe { flpr2::csr::ctrl::write(ctrl) };
+    unsafe { ctrl::write(ctrl) };
 
     unsafe { core::ptr::write_volatile(0x2007_0000 as *mut u16, 6888) };
 
