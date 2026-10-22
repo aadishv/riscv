@@ -1,0 +1,29 @@
+[package]
+name = "hello"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "hello"
+test = false
+bench = false
+
+[dependencies]
+cortex-m = { version = "0.7.7", features = ["inline-asm", "critical-section-single-core"] }
+cortex-m-rt = "0.7.5"
+defmt = "1.0"
+defmt-rtt = "1.0"
+panic-probe = { version = "1.0", features = ["print-defmt"] }
+embassy-executor = { version = "0.10", features = ["platform-cortex-m", "executor-thread", "defmt"] }
+embassy-nrf = { version = "0.11", features = ["defmt", "nrf54lm20-app-s", "time-driver-grtc", "time", "unstable-pac"] }
+embassy-time = { version = "0.5", features = ["defmt", "defmt-timestamp-uptime"] }
+
+[profile.dev]
+debug = 2
+opt-level = 1
+
+[profile.release]
+codegen-units = 1
+debug = 2
+lto = "fat"
+opt-level = "s"

@@ -1,0 +1,5 @@
+elf := "target/riscv32emc-unknown-none-elf/release/flpr2"
+
+build:
+    cargo build --release
+    llvm-objcopy -O binary {{ elf }} target/flpr2.bin

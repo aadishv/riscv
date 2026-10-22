@@ -1,0 +1,3 @@
+run:
+    cd ../flpr2 && just build
+    cd ../hello && cargo run

@@ -1,0 +1,14 @@
+[build]
+target = "thumbv8m.main-none-eabihf"
+
+[env]
+DEFMT_LOG = "info"
+
+[target.thumbv8m.main-none-eabihf]
+# probe-rs 0.31 silently corrupts flash on this chip with double-buffering on.
+runner = ["probe-rs", "run", "--chip", "nRF54LM20A", "--disable-double-buffering", "--verify"]
+rustflags = [
+    "-C", "link-arg=--nmagic",
+    "-C", "link-arg=-Tlink.x",
+    "-C", "link-arg=-Tdefmt.x",
+]

@@ -1,0 +1,20 @@
+[package]
+name = "flpr2"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+test = false
+bench = false
+
+[[bin]]
+name = "flpr2"
+test = false
+bench = false
+
+[dependencies]
+embedded-hal = "1.0.0"
+nrf-pac = { version = "0.4.0", features = ["nrf54lm20a-flpr"] }
+panic-halt = "1.0.0"
+riscv = { version = "0.16.1", features = ["critical-section-single-hart"] }
+riscv-rt = { version = "0.18.0", features = ["single-hart"] }
