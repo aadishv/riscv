@@ -12,10 +12,10 @@ mod shared_mem {
     }
 
     pub fn cpu_to_flpr_buffer() -> *mut CpuToFlpr {
-        return unsafe { __shared_mem as _ };
+        return core::ptr::addr_of!(__shared_mem) as _;
     }
     pub fn flpr_to_cpu_buffer() -> *mut FlprToCpu {
-        return unsafe { (__shared_mem+4096/2) as _ };
+        return unsafe { core::ptr::addr_of!(__shared_mem).add(4096/2) as _ };
     }
 }
 
@@ -61,6 +61,7 @@ unsafe extern "riscv-interrupt-m" fn on_vevif20() {
     // TODO: handle incoming message
     let _ = send(FlprToCpu::Pong);
     set_events(1 << 21);
+    unsafe { core::ptr::write_volatile(0x2007_0000 as *mut u32, 67) };
 }
 
 unsafe extern "riscv-interrupt-m" fn on_vevif21() {
@@ -111,5 +112,6 @@ pub fn send(message: FlprToCpu) -> Result<(), ()> {
     }
     unsafe { *shared_mem::flpr_to_cpu_buffer() = message; }
     TRANSMISSION_IN_PROGRESS.store(true, Ordering::Release);
+    unsafe { set_events(1 << 20); }
     Ok(())
 }
