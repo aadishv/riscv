@@ -43,10 +43,12 @@ async fn main(_spawner: Spawner) {
         let value = unsafe { core::ptr::read_volatile(0x2007_0000 as *mut u16) };
         Timer::after_millis(10).await;
         info!("value {}", value);
-        if value == 6888 {
+        if value == 67 {
             break;
         }
     }
+
+    info!("setting task now");
 
     pac::VPR00.tasks_trigger(21).write_value(1);
 
