@@ -11,14 +11,9 @@ use embassy_nrf::{
 use embassy_time::Timer;
 use {defmt_rtt as _, panic_probe as _};
 
-const FLPR_BIN: &[u8] = include_bytes!("../../flpr2/target/flpr2.bin");
-const FLPR_BASE: usize = 0x20067C00;
+mod flpr;
 
-unsafe extern "C" {
-    // Provided by the linker: This is the start of the shared memory buffer
-    // used for communicating between the cores.
-    pub static mut __shared_mem: u32;
-}
+const FLPR_BIN: &[u8] = include_bytes!("../../flpr2/target/flpr2.bin");
 
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) {

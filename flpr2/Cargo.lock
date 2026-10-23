@@ -74,6 +74,7 @@ dependencies = [
  "panic-halt",
  "riscv",
  "riscv-rt",
+ "rpc",
 ]
 
 [[package]]
@@ -177,6 +178,10 @@ name = "riscv-types"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d3f2ad9f15a07f4a0e1677124f9120ce7e83ab7e1ca7186af0ca9da529b62e80"
+
+[[package]]
+name = "rpc"
+version = "0.1.0"
 
 [[package]]
 name = "rustc_version"

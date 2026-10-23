@@ -1,14 +1,14 @@
 #![no_std]
 
-const SHARED_MEMORY_SIZE = 4096;
-
 #[repr(C)]
-enum CpuToFlpr {
+pub enum CpuToFlpr {
     Ping,
 }
 
 #[repr(C)]
-enum FlprToCpu {
+pub enum FlprToCpu {
     Pong,
 }
 
+const _: () = assert!(size_of::<CpuToFlpr>() <= 2048);
+const _: () = assert!(size_of::<FlprToCpu>() <= 2048);
